@@ -339,5 +339,6 @@ const handleSubmit = async (e) => {
 ```
 
 So here is the full frontend code, on github.
+Please note: when you submit the form now, it will say there is an issue since the backend isn't on yet.
 
-Ok, we are done with the frontend, we may need to change a few things once the backend is working.
+We have completed the frontend, let's move on to creating the backend. Ee may need to change a few things once the backend is working.
