@@ -51,41 +51,60 @@ npm start
 
 <pic of folder format using nano-react-app>
 
-The HTML in App.js will be:
+The initial format of this page will be:
 
 ```
 import React from 'react';
 import './App.css';
 
-export default () => (
-	<div className='app'>
-		<h1>Contact Me</h1>
-		<form
-			id='contact-form'
-			className='contact-form'>
-			<input
-				placeholder='name*'
-				type='text'
-				name='name'
-				required='true'
-			/>
-			<input
-				placeholder='email address*'
-				type='email'
-				name='email'
-				required='true'
-			/>
+function App() {
+	return (
+		<div>
+		</div>
+	);
+}
 
-			<textarea
-				maxLength={300}
-				placeholder='message (max 300 characters)*'
-				name='message'
-				required='true'
-			/>
-			<button type='submit'>Submit</button>
-		</form>
-	</div>
-);
+export default App;
+```
+
+The App.jsx will have the following like this:
+
+```
+import React from 'react';
+import './App.css';
+
+function App() {
+	return (
+		<div className='app'>
+			<h1>Contact Me</h1>
+			<form
+				id='contact-form'
+				className='contact-form'>
+				<input
+					placeholder='name*'
+					type='text'
+					name='name'
+					required={true}
+				/>
+				<input
+					placeholder='email address*'
+					type='email'
+					name='email'
+					required={true}
+				/>
+				<textarea
+					maxLength={300}
+					placeholder='message (max 300 characters)*'
+					name='message'
+					required={true}
+				/>
+				<button type='submit'>Submit</button>
+			</form>
+		</div>
+	);
+}
+
+export default App;
 
 ```
 
@@ -109,9 +128,6 @@ CSS styling in App.css will be:
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
-}
-
-h1 {
 	color: var(--basecolor);
 }
 
@@ -119,7 +135,7 @@ h1 {
 	display: flex;
 	flex-direction: column;
 	gap: 1rem;
-	width: 50vw;
+	width: 50%;
 }
 
 .contact-form > input {
@@ -140,6 +156,7 @@ h1 {
 	font-size: 1.4rem;
 	color: var(--basecolor);
 	padding: 0.5rem;
+	resize: none;
 }
 
 input::placeholder,
@@ -163,13 +180,164 @@ textarea::placeholder {
 	transition: 0.4s ease-in-out;
 	background-color: var(--basecolor);
 }
-
 ```
 
 ### Implement state management for form data
 
-We will implement state management to make it easier in storing values and have them updated for the backend.
+Let's work on the functionality. I created a usestate to store the values that will update whenever there is a change. We will implement state management to make it easier in storing values and have them updated for the backend.
+
+We will add useState to the react import.
+
+```
+import React, { useState } from 'react';
+```
+
+Then add the instances
+
+```
+	//Email form
+	const [emailForm, setEmailForm] = useState({
+		name: '',
+		email: '',
+		message: '',
+	});
+
+	//Result if message was sent or not
+	const [result, setResult] = useState('');
+
+	//Status of while message is being sent
+	const [status, setStatus] = useState('Submit');
+```
+
+Bind the emailform values to the inputs
+
+```
+	<input
+		placeholder='name*'
+		type='text'
+		name='name'
+		required={true}
+		value={emailForm.name}
+	/>
+	<input
+		placeholder='email address*'
+		type='email'
+		name='email'
+		required={true}
+		value={emailForm.email}
+	/>
+	<textarea
+		maxLength={300}
+		placeholder='message (max 300 characters)*'
+		name='message'
+		required={true}
+		value={emailForm.message}
+	/>
+```
+
+We will update the "submit" text on the button to show while it is sending the email. Also, add an h3 after the button to display if the message was sent or if there was an error. It will be binded to the result state.
+
+```
+<button type='submit'>{status}</button>
+<h3>{result}</h3>
+```
 
 ### Integrate client-side validation for email input
 
-### Create a button to trigger the email sending process
+We will write some functions that updates the emailForm values when changes occur and also a reset form to clear it when completing the submission.
+
+Add the function to clear out the emailform to be used later on
+
+```
+function resetEmailForm() {
+		setEmailForm({ name: '', email: '', message: '' });
+	}
+```
+
+Now we will add the functionality to update the values whenever the values get changed
+
+```
+function handleEmailFormChange(event) {
+		setEmailForm((prevEmailData) => {
+			return {
+				...prevEmailData,
+				[event.target.name]: event.target.value,
+			};
+		});
+
+		if (result.length > 0) {
+			setResult('');
+		}
+	}
+```
+
+Add the function to each input field using onChange
+
+```
+onChange={handleEmailFormChange}
+```
+
+Here is the entire updated React .jsx file so far:
+
+```
+
+
+```
+
+### Create function for email sending process
+
+We will now write the function that will make a call to the backend.
+
+This will be triggered when pressing the submit button. This will be added to the form like so:
+
+```
+<Form
+	id='contact-form'
+	onSubmit={handleSubmit}
+	method='POST'>
+```
+
+The handle submit function will get the values from the emailform state and saved to a json that will be submitted to the backend, it will have the following:
+
+```
+const handleSubmit = async (e) => {
+		setResult('');
+		e.preventDefault();
+		setStatus('Sending...');
+
+		const { name, email, message } = e.target.elements;
+
+		let details = {
+			name: name.value,
+			email: email.value,
+			message: message.value,
+		};
+
+		try {
+			let response = await fetch('http://localhost:5000/send', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json;charset=utf-8',
+				},
+				body: JSON.stringify(details),
+			});
+			setStatus('Submit');
+			let result = await response.json();
+
+			if (result.status === 'success') {
+				setResult('Message Sent!');
+				resetEmailForm();
+			} else if (result.status === 'fail') {
+				alert('Uh oh! Message failed to send.');
+			}
+		} catch (error) {
+			console.error(error);
+			setStatus('Submit');
+			setResult('Uh oh! Issues with submitting message.');
+		}
+	};
+```
+
+So here is the full frontend code, on github.
+
+Ok, we are done with the frontend, we may need to change a few things once the backend is working.

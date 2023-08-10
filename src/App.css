@@ -15,9 +15,6 @@
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
-}
-
-h1 {
 	color: var(--basecolor);
 }
 
@@ -46,6 +43,7 @@ h1 {
 	font-size: 1.4rem;
 	color: var(--basecolor);
 	padding: 0.5rem;
+	resize: none;
 }
 
 input::placeholder,
