@@ -1,4 +1,4 @@
-# Full Stack Contact Form: Getting Started & React Frontend
+# Full Stack Contact Form Series: Backend
 
 ## Setting Up the Backend (Node.js)
 
@@ -42,7 +42,7 @@ In the package.json, add the following start script, the full package.json text
 	    "main": "server.js",
 	    "scripts": {
 	        "test": "echo \"Error: no test specified\" && exit 1",
-	        "start": "node server.js"
+	        "mailstart": "node server.js"
 	    },
 	    "keywords": [],
 	    "author": "",
@@ -57,20 +57,30 @@ In the package.json, add the following start script, the full package.json text
 
 ### config.js file
 
-On the config.json will be the credentials. You will put the credentials from the email created on whois.com
+On the config.json will be the credentials. You will put the credentials from the email created on whois.com and the messages that are sent.
 
 <pic of the whois information>
 ```
+// change the following details to your information
 	module.exports = {
 	    USER: 'NewEmail@domain.com',
 	    PASS: 'password',
 	    EMAIL: 'NewEmail@domain.com',
+		HOST: 'smtp.mailhost.com',
+		MAILPORT: 587,
+		YOURNAME: 'Your Name',
+		YOURSITE: 'www.yoursite.com',
     };
 ```
 
 ### server.js file
 
 We will first add the following required packages and initial setup.
+
+Express will be used for the router
+Nodemailer will be what sends the message.
+Cors will be used for
+fs is a file reader for when converting this backend from http to https
 
 ```
 var express = require('express');
@@ -92,7 +102,7 @@ app.get('/', (req, res) => {
 app.listen(5000, () => console.log(`backend is running on port 5000`));
 ```
 
-To test backend, run npm run start
+To test backend, run npm run mailstart
 
 succesful start of backend shows up like this:
 <image of the backend on terminal>
@@ -103,16 +113,17 @@ To turn off the backend, do ctrl + c on the terminal
 
 ## Create Nodemailer functions
 
-We will create the required functions for nodemailer. To get the full documentation of nodemailer go here. Replace the fields with the details from whois email information.
+We will create the required functions for nodemailer. To get the full documentation of nodemailer go here. Replace the fields with the details from whois email information. We will use Nodemailer to create a transporter. Configure transporter with Whois.com's SMTP settings
 
 ```
 var transport = {
-host: 'smtp.mailhost.com', // Replace with the SMTP host of your provider
-port: 587,
-auth: {
-user: creds.USER,
-pass: creds.PASS,
-},
+	host: creds.HOST, // The SMTP host of your provider
+	port: creds.MAILPORT,
+	auth: {
+		user: creds.USER,
+		pass: creds.PASS,
+	},
+	from: creds.EMAIL,
 };
 ```
 
@@ -134,20 +145,20 @@ When starting the backend now, you will see the this success message or else it 
 
 ## Create API routes for handling email requests
 
-Create the post route that will send the message to your email and will also send an auto reply to the person sending you a message.
+Create a route to handle email sending requests. Create the post route that will send the message to your email and will also send an auto reply to the person sending you a message. Use the transporter to send emails with user-provided data. Handle success and error responses in the backend
 
 ```
 router.post('/send', (req, res, next) => {
 	var name = req.body.name;
 	var email = req.body.email;
 	var message = req.body.message;
-	var senderEmail = name + ' <' + creds.EMAIL + '>';
+	var senderEmail = `${name} <${creds.EMAIL}>`;
+	var yourEmail = `${creds.YOURNAME} <${creds.EMAIL}>`;
 	var content = `name: ${name} \n email: ${email} \n message: ${message} `;
-
 	var mail = {
 		from: senderEmail,
-		to: creds.EMAIL, // email address you will receive messages
-		subject: 'New Message from your Portfolio',
+		to: creds.EMAIL, // This is email address that you want to receive messages on
+		subject: `New Portfolio Message from ${name}`,
 		text: content,
 	};
 
@@ -166,11 +177,11 @@ router.post('/send', (req, res, next) => {
 			//Send Auto Reply email
 			transporter.sendMail(
 				{
-					//your email address
-					from: creds.EMAIL,
+					from: yourEmail,
 					to: email,
 					subject: 'Message received',
-					text: `Hi ${name},\nThank you for sending me a message. I will get back to you soon.\n\nForm details\nName: ${name}\n Email: ${email}\n Message: ${message}`,
+					text: `Hi ${name},\nThank you for sending me a message. I will get back to you soon.\n\nBest Regards,\n${creds.YOURNAME}\n${creds.YOURSITE}\n\n\nMessage Details\nName: ${name}\n Email: ${email}\n Message: ${message}`,
+					html: `<p>Hi ${name},<br>Thank you for sending me a message. I will get back to you soon.<br><br>Best Regards,<br>${creds.YOURNAME}<br>${creds.YOURSITE}<br><br><br>Message Details<br>Name: ${name}<br> Email: ${email}<br> Message: ${message}</p>`,
 				},
 				function (error, info) {
 					if (error) {
@@ -185,15 +196,17 @@ router.post('/send', (req, res, next) => {
 });
 ```
 
+## Github Code:
+
 The backend is located on this github location:
 
 ## Try on LocalHost
 
 Ok, we are ready to test locally.
 
-1. start the backend with npm run start
+1. start the backend with npm run mailstart
 2. start the frontend with npm run start
-3. Write the message and press sent, it should send succesfully.
+3. Write the message and press submit, it should send succesfully.
 
 <images of the frontend>
 
@@ -203,6 +216,5 @@ So you will get an email from Tester Name:
 and they will get an auto reply:
 <image of the auto reply>
 
-## Getting Deployment ready
-
-## Configure Nodemailer to use Whois.com's email service
+Next part of the series will discuss how to deploy and issues I came across with.
+Previous part was about creating the front end form that included the fetch request when submitting.

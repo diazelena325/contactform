@@ -298,6 +298,9 @@ This will be triggered when pressing the submit button. This will be added to th
 ```
 
 The handle submit function will get the values from the emailform state and saved to a json that will be submitted to the backend, it will have the following:
+Make a POST request from React to the Node.js backend
+Pass email and message data as JSON in the request body
+Handle response messages (success or error) in React that will be saved to the result state
 
 ```
 const handleSubmit = async (e) => {
@@ -338,7 +341,9 @@ const handleSubmit = async (e) => {
 	};
 ```
 
+## Github Code:
+
 So here is the full frontend code, on github.
 Please note: when you submit the form now, it will say there is an issue since the backend isn't on yet.
 
-We have completed the frontend, let's move on to creating the backend. Ee may need to change a few things once the backend is working.
+We have completed the frontend, next part will be about creating the backend. We may need to change a few things once the backend is working.

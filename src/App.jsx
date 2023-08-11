@@ -44,7 +44,7 @@ function App() {
 		};
 
 		try {
-			let response = await fetch('http://localhost:5000/send', {
+			let response = await fetch('https://localhost:5000/send', {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json;charset=utf-8',
