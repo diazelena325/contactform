@@ -151,6 +151,8 @@ The config.js file plays a crucial role in maintaining the security of your back
 - **YOURNAME:** Your full name for the sender and auto reply message
 - **YOURSITE:** Your portfolio website
 
+![whois email information](https://github.com/diazelena325/contactform/blob/main/tutorial_images/SMTP_INFO.png)
+
 Replace the placeholders with the actual credentials and information that correspond to the email account created on Whois.com. These details are essential for successfully sending emails using Nodemailer.
 
 And that's it! Your config.js file is now set up to securely hold your credentials and email-related information.

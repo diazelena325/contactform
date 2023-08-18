@@ -75,7 +75,7 @@ If you're ready to elevate the professionalism of your website, configuring a pe
 
 4. **User Addition and Essential Details:** After successfully adding the user, a collection of essential details will be displayed. Keep these close, as they'll be integral to the backend setup.
 
-<pic of the whois information>
+![whois email information](https://github.com/diazelena325/contactform/blob/main/tutorial_images/SMTP_INFO.png)
 
 This process ensures a personalized email address linked to your domain, enhancing your professional communication capabilities.
 
@@ -124,9 +124,16 @@ npm start
 
 ### Crafting a User-Friendly Contact Form Interface with Inputs and Messages
 
-1. **Selecting App.js for Efficiency:** To expedite development, we'll employ the App.js file for constructing the contact form. If you don't already have an App.css file, create one within the same location as App.js.
+1. **Selecting App.js for Efficiency:** To expedite development, we'll employ the **App.js** file for constructing the contact form. If you don't already have an **App.css** file, create one within the same location as App.js.
 
-![folder format using nano-react-app](image.jpg)
+```
+/contactform
+	/src
+    	├── App.css
+    	├── App.jsx
+    	├── index.jsx
+
+```
 
 2. **Initial Page Structure:**
 
@@ -283,6 +290,7 @@ textarea::placeholder {
 }
 ```
 
+![Contact Form Frontend]()
 <a id="Enabling-Form-Data-Management-with-State"></a>
 
 ### Enabling Form Data Management with State
