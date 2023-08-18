@@ -1,57 +1,136 @@
-# Full Stack Contact Form: Getting Started & React Frontend
+## Full Series - Building a Full Stack Contact Form: React Frontend, Node.js Backend, Deployment
 
-Welcome to Part 1 of my comprehensive guide where I'll walk you through creating a full-stack contact form using React and Node.js. In this segment, I'll provide a brief overview of our tutorial's objectives, and I'll explain the technologies I'll be using, including React, Node.js, NPM, and the integration of Whois.com for setting up email addresses within my domain configuration.
+[Part 1: Getting Started & React Frontend Development](https://dev.to/elenadiaz32505/creating-a-full-stack-contact-form-using-react-and-node-eoh-temp-slug-6816062)
+[Part 2: Node.js Backend Development](https://dev.to/elenadiaz32505/part-2-building-a-full-stack-contact-form-from-react-frontend-to-nodejs-backend-553e-temp-slug-1567873)
+[Part 3: Deployment](https://dev.to/elenadiaz32505/part-3-building-a-full-stack-contact-form-deployment-3o4d-temp-slug-3281173)
 
-## Get Started
+Have you ever followed a tutorial to create a contact form, only to hit a roadblock when it comes moving beyond your local environment? If that frustration sounds familiar, you're in good company. As I worked on refining my portfolio site and adding more functionalities, I realized the vital role that backend processes play in achieving a truly flawless user experience. This insight prompted me to put together a comprehensive tutorial that leaves no stone unturned – from initial form creation to the final deployment steps.
 
-To kickstart your journey, you'll want to have a basic understanding of React, Javascript, HTML, CSS and Node.js, as well as some familiarity with NPM for managing packages. I recommend using Visual Studio Code (VsCode) as your coding tool of choice. As for deployment, ensure you have a GitHub repository ready. To host your website, I personally connect it to CyberPanel, which simplifies the hosting process. By linking GitHub and CyberPanel, deploying your project becomes a seamless experience. Let's dive in!
+Just picture the sense of accomplishment when you're able to build a polished and responsive contact form for your personal website or portfolio. But here's the exciting part – this tutorial isn't solely about appearances. It's about empowering you with the knowledge and tools needed to ensure your contact form not only dazzles visually but also functions flawlessly, providing users with a seamless and enjoyable interaction.
 
-### Getting an email from domain
+### Contents
 
-My domain is registered on Whois.com where I will be obtaining an email associated with the domain. Here's a simple guide on creating an email using your domain within the Whois platform:
+- [Part 1: Getting Started & Frontend Development](#Getting-Started-&-Frontend-Development)
+  - [What You'll Accomplish](#What-youll-accomplish)
+  - [Prerequisites and Tools](#Prerequisites-and-Tools)
+- [Setting Up a Domain Email with Whois.com](#Setting-Up-a-Domain-Email-with-Whois.com)
+- [Setting Up the Frontend (React)](<#Setting-Up-the-Frontend-(React)>)
+  - [Creating a New React Application](#Creating-a-New-React-Application)
+  - [Crafting a User-Friendly Contact Form Interface with Inputs and Messages](#Crafting-a-User-Friendly-Contact-Form-Interface-with-Inputs-and-Messages)
+  - [Elevating the Form's Aesthetics with CSS Styling](#Elevating-the-Form's-Aesthetics-with-CSS-Styling)
+  - [Enabling Form Data Management with State](#Enabling-Form-Data-Management-with-State)
+  - [Implementing Client-Side Validation for Email Input](#Implementing-Client-Side-Validation-for-Email-Input)
+  - [Creating the Email Sending Function and Integrating Backend Communication](#Creating-the-Email-Sending-Function-and-Integrating-Backend-Communication)
+- [GitHub Repository for Frontend Code](#GitHub-Repository-for-Frontend-Code)
 
-1. Navigate to Whois.com and access the "Manage Email" section.
+<a id="Getting-Started-&-Frontend-Development"></a>
 
-2. Opt for the "Add User" option, which will establish an email address using your domain.
+## Part 1: Getting Started & Frontend Development
 
-3. Complete the provided form with the necessary information for the new email address.
+Welcome to Part 1 of this 3 part comprehensive guide, where we'll embark on a journey to create a full stack contact form using the power of React and Node.js. Throughout this series, we'll delve deep into the realm of web development, crafting a polished and fully functional contact form that enhances your website's communication capabilities. By the time you reach the end of this guide, you'll possess the skills needed to elevate your website with a truly seamless communication channel.
 
-4. Following the user addition, essential details will be displayed. These details will be used for the backend.
+<a id="What-youll-accomplish"></a>
+
+### What You'll Accomplish
+
+In this multi-part tutorial, I'll guide you through the process of building a robust full-stack contact form using React and Node.js. By following along, you'll:
+
+- **Integrate Domain Email:** Learn how to create and integrate a personalized email address associated with your domain, elevating your website's professionalism.
+
+- **Create a User-Friendly Frontend:** Design an intuitive and visually appealing contact form interface using React, ensuring your users have a smooth interaction.
+
+- **Set Up a Powerful Backend:** Build a Node.js backend to process and manage incoming contact form submissions, making sure no messages slip through the cracks.
+
+- **Achieve Seamless Deployment:** Deploy your completed full-stack contact form project online, allowing visitors to your website to access and utilize the contact form efficiently.
+
+<a id="Prerequisites-and-Tools"></a>
+
+### Prerequisites and Tools
+
+Before we take the plunge into creating our full-stack contact form, let's make sure you're equipped with the right skills and tools. Here's what you'll need:
+
+- **Solid Foundation:** It's essential to have a strong grasp of React, JavaScript, HTML, CSS, and Node.js. These form the backbone of our development journey. Additionally, a familiarity with NPM (Node Package Manager) for handling dependencies will prove advantageous.
+
+- **Code Editor:** I highly recommend working with Visual Studio Code (VsCode). Its user-friendly interface and powerful features will make your coding experience smoother.
+
+- **Domain Email Setup:** To achieve a professional touch, we'll utilize Whois.com for configuring email addresses within your domain. This will enable automatic replies to those who reach out through the contact form.
+
+- **GitHub Repository:** Ensure you have a GitHub repository ready for version control and collaboration. This will be our launchpad for deploying the contact form.
+
+- **Hosting Exploration:** We'll explore the use of CyberPanel for hosting. Its streamlined approach will simplify the deployment process, ensuring your contact form is up and running efficiently.
+
+Now, let's roll up our sleeves and get started on this exciting journey!
+
+<a id="#Setting-Up-a-Domain-Email-with-Whois.com"></a>
+
+## Setting Up a Domain Email with Whois.com
+
+If you're ready to elevate the professionalism of your website, configuring a personalized domain email can be a significant step. While this guide focuses on setting up a domain email through Whois.com, it's important to note that you can achieve similar results if you have access to the necessary SMTP (Simple Mail Transfer Protocol) data from your domain provider. Here's a step-by-step guide to help you create an email address associated with your domain:
+
+1. **Accessing the "Manage Email" Section:** Head over to Whois.com and after logging into your account and going into your domain, navigate to the "Manage Email" section. This is where you'll be orchestrating the creation of your domain-based email address.
+
+2. **Creating a New User:** Look for the "Add User" option – this will be your gateway to establishing an email address that's intricately tied to your domain.
+
+3. **Form Completion:** A form will pop up, fill it out with all the necessary information required for the new email address. This will include the email prefix (the part before the "@" symbol), alternate email, and other pertinent details.
+
+4. **User Addition and Essential Details:** After successfully adding the user, a collection of essential details will be displayed. Keep these close, as they'll be integral to the backend setup.
+
+<pic of the whois information>
 
 This process ensures a personalized email address linked to your domain, enhancing your professional communication capabilities.
 
+<a id="Setting-Up-the-Frontend-(React)"></a>
+
 ## Setting Up the Frontend (React)
 
-### Create a new React application
+Now that we've laid the groundwork, it's time to tackle the frontend using the power of React.
 
-1. Create folder and open on VScode. Open Terminal and run **one** of these two commands to create a template react app:
+<a id="Creating-a-New-React-Application"></a>
+
+### Creating a New React Application
+
+1. **Prepare the Workspace:** Begin by creating a dedicated folder for your project and open it in your preferred code editor, such as Visual Studio Code (VSCode).
+
+2. **Initialize the React App:** Open the Terminal within your project folder and choose one of the following commands to initiate a React app template:
+
+For a comprehensive React template:
 
 ```
-// full react template
 npx create-react-app .
+```
 
-// simplified minimalist react template
+For a simplified minimalist React template:
+
+```
 npx nano-react-app .
 ```
 
-To run the application on local, use the following command:
+3. **Launching the App Locally:** To run your newly created React application on your local machine, execute the following command:
+
+If you opted for the comprehensive template:
 
 ```
-// if you used create-react-app
 npm start
+```
 
-// if you used nano-react-app, do both of these
+If you went with the minimalist template, perform these two commands:
+
+```
 npm install
 npm start
 ```
 
-### Design a user-friendly interface for email input and message
+<a id="Crafting-a-User-Friendly-Contact-Form-Interface-with-Inputs-and-Messages"></a>
 
-1. For fast development, I will be using App.js to create the form. Check if you have an App.css file, if not then create one in the same location as App.js
+### Crafting a User-Friendly Contact Form Interface with Inputs and Messages
 
-<pic of folder format using nano-react-app>
+1. **Selecting App.js for Efficiency:** To expedite development, we'll employ the App.js file for constructing the contact form. If you don't already have an App.css file, create one within the same location as App.js.
 
-The initial format of this page will be:
+![folder format using nano-react-app](image.jpg)
+
+2. **Initial Page Structure:**
+
+The starting configuration of your page will resemble this:
 
 ```
 import React from 'react';
@@ -67,7 +146,9 @@ function App() {
 export default App;
 ```
 
-The App.jsx will have the following like this:
+3. **Enhancing with Form Elements:**
+
+Populate your App.jsx file with the following code to build the foundation of the contact form interface:
 
 ```
 import React from 'react';
@@ -108,7 +189,15 @@ export default App;
 
 ```
 
-CSS styling in App.css will be:
+<a id="Elevating-the-Form's-Aesthetics-with-CSS-Styling"></a>
+
+### Elevating the Form's Aesthetics with CSS Styling
+
+To create a simple and user-friendly form, let's enhance its visual appeal with some CSS styling.
+
+1. **Defining Color Variables:**
+
+Start by setting up color variables in your :root selector:
 
 ```
 :root {
@@ -119,7 +208,13 @@ CSS styling in App.css will be:
 	--accentcolor3: #b5838d;
 	--whitecolor: #ffffff;
 }
+```
 
+2. **Structuring the App Container:**
+
+Implement styling for the main container holding the form:
+
+```
 .app {
 	font-family: Helvetica, sans-serif;
 	background-color: var(--maincolor);
@@ -130,7 +225,13 @@ CSS styling in App.css will be:
 	align-items: center;
 	color: var(--basecolor);
 }
+```
 
+3. **Formatting the Contact Form:**
+
+Craft styling rules for the contact form and its elements:
+
+```
 .contact-form {
 	display: flex;
 	flex-direction: column;
@@ -182,19 +283,24 @@ textarea::placeholder {
 }
 ```
 
-### Implement state management for form data
+<a id="Enabling-Form-Data-Management-with-State"></a>
 
-Let's work on the functionality. I created a usestate to store the values that will update whenever there is a change. We will implement state management to make it easier in storing values and have them updated for the backend.
+### Enabling Form Data Management with State
 
-We will add useState to the react import.
+Let's delve into the realm of functionality. To streamline the process, we'll harness the power of state management, ensuring smoother data storage and updates in tandem with the backend.
+
+1. **Importing useState:**
+   Begin by importing the useState hook from React:
 
 ```
 import React, { useState } from 'react';
 ```
 
-Then add the instances
+2. **Implementing State Instances:**
+   Set up instances for managing different aspects of the form's state:
 
 ```
+function App() {
 	//Email form
 	const [emailForm, setEmailForm] = useState({
 		name: '',
@@ -207,9 +313,13 @@ Then add the instances
 
 	//Status of while message is being sent
 	const [status, setStatus] = useState('Submit');
+
+	// Rest of the JSX and form components...
+}
 ```
 
-Bind the emailform values to the inputs
+2. **Binding State to Form Inputs:**
+   Bind the state values to the respective input fields:
 
 ```
 	<input
@@ -235,18 +345,24 @@ Bind the emailform values to the inputs
 	/>
 ```
 
-We will update the "submit" text on the button to show while it is sending the email. Also, add an h3 after the button to display if the message was sent or if there was an error. It will be binded to the result state.
+4. **Updating Submit Button and Result Display:**
+   Adjust the button text to display the sending status, and include an **'h3'** element to showcase the result, bound to the **'result'** state:
 
 ```
 <button type='submit'>{status}</button>
 <h3>{result}</h3>
 ```
 
-### Integrate client-side validation for email input
+By incorporating useState, you're effectively enhancing the management of your form's data. This dynamic approach ensures that data is stored and updated seamlessly, creating a user-friendly interaction. With these elements in place, your contact form is poised to become a dynamic communication tool.
 
-We will write some functions that updates the emailForm values when changes occur and also a reset form to clear it when completing the submission.
+<a id="Implementing-Client-Side-Validation-for-Email-Input"></a>
 
-Add the function to clear out the emailform to be used later on
+### Implementing Client-Side Validation for Email Input
+
+Enhance your form's interactivity by incorporating client-side validation. This step will ensure smoother handling of user input and improve the overall user experience.
+
+1. **Function to Reset the Form:**
+   Let's begin by creating a function that clears the emailForm values once the submission is complete:
 
 ```
 function resetEmailForm() {
@@ -254,7 +370,8 @@ function resetEmailForm() {
 	}
 ```
 
-Now we will add the functionality to update the values whenever the values get changed
+2. **Function to Handle Form Changes:**
+   Next, develop a function that updates the emailForm values as changes occur in the input fields. Additionally, if there's a result message displayed, it will be cleared:
 
 ```
 function handleEmailFormChange(event) {
@@ -271,24 +388,44 @@ function handleEmailFormChange(event) {
 	}
 ```
 
-Add the function to each input field using onChange
+3. **Applying Function to Input Fields:**
+   Implement the **'handleEmailFormChange'** function to each input field using the **'onChange'** event:
 
 ```
-onChange={handleEmailFormChange}
+<input
+    placeholder='name*'
+    type='text'
+    name='name'
+    required={true}
+    value={emailForm.name}
+    onChange={handleEmailFormChange}
+/>
+<input
+    placeholder='email address*'
+    type='email'
+    name='email'
+    required={true}
+    value={emailForm.email}
+    onChange={handleEmailFormChange}
+/>
+<textarea
+    maxLength={300}
+    placeholder='message (max 300 characters)*'
+    name='message'
+    required={true}
+    value={emailForm.message}
+    onChange={handleEmailFormChange}
+/>
 ```
 
-Here is the entire updated React .jsx file so far:
+<a id="Creating-the-Email-Sending-Function-and-Integrating-Backend-Communication"></a>
 
-```
+### Creating the Email Sending Function and Integrating Backend Communication
 
+Now it's time to bring your contact form to life by crafting the function responsible for initiating the email sending process and integrating communication with the backend. This step will enable the dynamic interaction between your frontend and backend systems.
 
-```
-
-### Create function for email sending process
-
-We will now write the function that will make a call to the backend.
-
-This will be triggered when pressing the submit button. This will be added to the form like so:
+1. **Adding the Form Submission Functionality:**
+   Integrate the **'handleSubmit'** function with your form using the **'onSubmit'** event handler:
 
 ```
 <Form
@@ -297,10 +434,9 @@ This will be triggered when pressing the submit button. This will be added to th
 	method='POST'>
 ```
 
-The handle submit function will get the values from the emailform state and saved to a json that will be submitted to the backend, it will have the following:
-Make a POST request from React to the Node.js backend
-Pass email and message data as JSON in the request body
-Handle response messages (success or error) in React that will be saved to the result state
+2. **Implementing the handleSubmit Function:**
+
+The handleSubmit function orchestrates the entire email sending process. It extracts data from the form, initiates a POST request to the backend, and handles response messages accordingly:
 
 ```
 const handleSubmit = async (e) => {
@@ -341,9 +477,16 @@ const handleSubmit = async (e) => {
 	};
 ```
 
-## Github Code:
+<a id="GitHub-Repository-for-Frontend-Code"></a>
 
-So here is the full frontend code, on github.
-Please note: when you submit the form now, it will say there is an issue since the backend isn't on yet.
+## GitHub Repository for Frontend Code
 
-We have completed the frontend, next part will be about creating the backend. We may need to change a few things once the backend is working.
+You can find the complete [frontend code on GitHub](https://github.com/diazelena325/contactform).
+
+**Note:** When you attempt to submit the form, you might encounter an issue as the backend is not yet operational.
+
+With the frontend development phase successfully completed, our next step is to dive into crafting the backend. Please keep in mind that as we proceed with the backend implementation, there might be certain adjustments required in the frontend code to seamlessly integrate both components.
+
+Get ready for [Part 2: Node.js Backend Development](https://dev.to/elenadiaz32505/part-2-building-a-full-stack-contact-form-from-react-frontend-to-nodejs-backend-553e-temp-slug-1567873), where we'll explore the backend creation process and ensure the full-stack contact form is up and running flawlessly.
+
+Happy coding! 🚀
