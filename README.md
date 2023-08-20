@@ -4,7 +4,7 @@ Welcome to the Full Stack Contact Form Frontend repository! This project serves 
 
 ## Project Overview
 
-This project is part of a tutorial series available on [Dev.to](https://dev.to/) that guides you through building a complete full-stack contact form. The series covers the following key steps:
+This project is part of a tutorial series available on [dev.to](https://dev.to/) that guides you through building a complete full-stack contact form. The series covers the following key steps:
 
 - [Part 1 - Building a Full Stack Contact Form: React Frontend](https://dev.to/elenadiaz32505/part-1-full-stack-contact-form-getting-started-react-frontend-2023-1bh4)
 - [Part 2 - Building a Full Stack Contact Form: Node.js Backend](https://dev.to/elenadiaz32505/part-2-building-a-full-stack-contact-form-nodejs-backend-2023-jdp)
